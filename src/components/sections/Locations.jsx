@@ -7,7 +7,7 @@ function LocationCard({ location, openPanel }) {
   const mountain = location.id === 'monchique'
   return (
     <article className="location-card photo-section">
-      <img className="scene" src={`/images/${location.id}.webp`} srcSet={`/images/${location.id}-640.webp 640w, /images/${location.id}.webp 1600w`} sizes="(max-width: 650px) 100vw, 49vw" alt="" />
+      <img className="scene" src={`${import.meta.env.BASE_URL}images/${location.id}.webp`} srcSet={`${import.meta.env.BASE_URL}images/${location.id}-640.webp 640w, ${import.meta.env.BASE_URL}images/${location.id}.webp 1600w`} sizes="(max-width: 650px) 100vw, 49vw" alt="" />
       <div className="location-copy relative">
         <p className="overline">Velochique</p>
         <h3>{mountain ? 'Monchique' : <>Vista Rio<br />Portimão</>}</h3>

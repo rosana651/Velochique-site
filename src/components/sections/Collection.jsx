@@ -15,7 +15,7 @@ export default function Collection({ openPanel }) {
       </div>
       <ul className="product-rail">{products.map(item => (
         <li key={item.id}><button onClick={() => openPanel(item.id)}>
-          <div className="product-image"><img src={`/images/${item.id}.webp`} alt="" loading="lazy" /></div>
+          <div className="product-image"><img src={`${import.meta.env.BASE_URL}images/${item.id}.webp`} alt="" loading="lazy" /></div>
           <span>{t(item.name)}</span>
         </button></li>
       ))}</ul>

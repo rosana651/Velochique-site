@@ -66,7 +66,7 @@ export default function Header({ openPanel }) {
 
   return (
     <header ref={header} className="site-header" data-hidden={hidden && !menu}>
-      <a className="wordmark" href={homePrefix + '#top'} aria-label={t('Velochique home')}>Velochique</a>
+      <SiteLink className="wordmark" href={homePrefix + '#top'} aria-label={t('Velochique home')}>Velochique</SiteLink>
       <nav className="desktop-nav" aria-label={t('Primary')}>
         <div className="relative">
           <button className="flex items-center gap-1" aria-expanded={menu === 'locations'} onClick={e => toggle(e, 'locations')}>{t("Locations")} <Icon name="chevron" size={12} /></button>
@@ -78,7 +78,7 @@ export default function Header({ openPanel }) {
       </nav>
       {categories('compact')}
       <button className="icon-button mobile-toggle" aria-label={t('Toggle navigation')} aria-expanded={menu === 'mobile'} onClick={e => toggle(e, 'mobile')}><Icon name={menu === 'mobile' ? 'close' : 'menu'} /></button>
-      {menu === 'mobile' && <nav className="mobile-nav" aria-label={t('Mobile')}><a href={homePrefix + '#locations'} onClick={() => setMenu(null)}>{t("Locations")}</a>{links}<PreferenceControls /></nav>}
+      {menu === 'mobile' && <nav className="mobile-nav" aria-label={t('Mobile')}><SiteLink href={homePrefix + '#locations'} onClick={() => setMenu(null)}>{t("Locations")}</SiteLink>{links}<PreferenceControls /></nav>}
     </header>
   )
 }

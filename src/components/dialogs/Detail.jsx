@@ -25,7 +25,7 @@ export default function Detail({ panel, close }) {
     content = { label: 'Velochique collection', title: product.name, text: product.description, action: 'Ask about availability', href: contactUrl }
   }
   return <>
-    {(location || product) && <img className={product ? 'dialog-product' : 'dialog-photo'} src={`/images/${panel}.webp`} alt="" />}
+    {(location || product) && <img className={product ? 'dialog-product' : 'dialog-photo'} src={`${import.meta.env.BASE_URL}images/${panel}.webp`} alt="" />}
     <Eyebrow>{t(content.label)}</Eyebrow>
     <h2 id="panel-title">{t(content.title)}</h2>
     <p>{t(content.text)}{product && ' ' + t('Contact the café to ask about current availability.')}</p>

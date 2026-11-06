@@ -5,7 +5,7 @@ import ShopPage from './pages/ShopPage'
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/menu" element={<MenuPage />} />

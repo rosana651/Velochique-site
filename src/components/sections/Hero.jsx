@@ -7,7 +7,7 @@ export default function Hero() {
   const { t } = usePreferences()
   return (
     <section className="hero photo-section" aria-labelledby="hero-title">
-      <img className="scene" src="/images/hero.webp" alt="" fetchPriority="high" />
+      <img className="scene" src={`${import.meta.env.BASE_URL}images/hero.webp`} alt="" fetchPriority="high" />
       <div className="hero-copy relative">
         <Eyebrow>{t("Ride – sip – repeat")}</Eyebrow>
         <h1 id="hero-title">Velochique</h1>

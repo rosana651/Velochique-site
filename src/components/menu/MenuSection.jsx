@@ -17,7 +17,7 @@ export default function MenuSection({ section }) {
           {illustrated.map(item => (
             <li className="dish-card" key={t(item.name)}>
               <div className="dish-photo">
-                <img src={`/images/menu/dishes/${item.photo}.webp`} alt="" loading="lazy" />
+                <img src={`${import.meta.env.BASE_URL}images/menu/dishes/${item.photo}.webp`} alt="" loading="lazy" />
               </div>
               <div className="dish-copy">
                 <h3>{t(item.name)}</h3>
