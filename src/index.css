@@ -1,0 +1,30 @@
+@import "tailwindcss";
+@import "./styles/sections.css";
+@import "./styles/navigation.css";
+
+@theme {
+  --font-sans: "Jost", "Segoe UI", Arial, sans-serif;
+  --font-display: "Montserrat", "Avenir Next", Arial, sans-serif;
+}
+:root { font-family: var(--font-sans); color: #191a18; background: white; }
+html { scroll-behavior: smooth; }
+button, a { cursor: pointer; }
+:focus-visible { outline: 3px solid #c7752f; outline-offset: 3px; }
+.skip-link { position: absolute; z-index: 20; inset: 0 auto auto 1rem; transform: translateY(-110%); background: white; padding: .8rem; }
+.skip-link:focus { transform: none; }
+.eyebrow, .overline, .wordmark, h1, h2, h3, .action { font-family: var(--font-display); text-transform: uppercase; }
+.eyebrow, .overline { font-size: clamp(.65rem, .85vw, .85rem); font-weight: 650; letter-spacing: .19em; }
+.eyebrow { display: flex; align-items: center; gap: 1rem; }
+.eyebrow span, .short-rule { display: block; height: 1px; width: 2.7rem; background: currentColor; }
+.action { display: inline-flex; justify-content: center; align-items: center; gap: .75em; border: 1px solid transparent; padding: .78em 1.55em; min-height: 42px; font-weight: 650; font-size: clamp(.66rem,.86vw,.88rem); line-height: 1.1; letter-spacing: .095em; transition: background .2s, color .2s; }
+.action--dark { background: #181916; color: white; }
+.action--light { background: white; color: #171815; }
+.action--outline { border-color: currentColor; background: #1113; color: white; }
+.action:hover { background: #e6e2d6; color: #181916; }
+.action svg:last-child { transition: transform .2s; }
+.action:hover svg:last-child { transform: translateX(3px); }
+.wordmark { font-weight: 600; letter-spacing: .22em; line-height: 1; white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0s !important; }
+}
