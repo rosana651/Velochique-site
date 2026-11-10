@@ -5,15 +5,18 @@ import Action from '../ui/Action'
 function LocationCard({ location, openPanel }) {
   const { t } = usePreferences()
   const mountain = location.id === 'monchique'
+  const images = import.meta.env.BASE_URL + 'images/'
+  const photo = images + (mountain ? 'monchique-cafe.jpg' : 'portimao.webp')
+  const smallPhoto = images + (mountain ? 'monchique-cafe-640.jpg' : 'portimao-640.webp')
   return (
     <article className="location-card photo-section">
-      <img className="scene" src={`${import.meta.env.BASE_URL}images/${location.id}.webp`} srcSet={`${import.meta.env.BASE_URL}images/${location.id}-640.webp 640w, ${import.meta.env.BASE_URL}images/${location.id}.webp 1600w`} sizes="(max-width: 650px) 100vw, 49vw" alt="" />
+      <img className="scene" src={photo} srcSet={`${smallPhoto} 640w, ${photo} ${mountain ? 1280 : 1600}w`} sizes="(max-width: 650px) 100vw, 49vw" alt="" />
       <div className="location-copy relative">
         <p className="overline">Velochique</p>
         <h3>{mountain ? 'Monchique' : <>Vista Rio<br />Portimão</>}</h3>
         <span className="short-rule" aria-hidden="true" />
         <p className="location-desc">{t(location.description)}</p>
-        <Action tone="outline" onClick={() => openPanel(location.id)}>{t('View')} {mountain ? 'Monchique' : 'Portimão'}</Action>
+        <Action tone="outline" onClick={() => openPanel('map-' + location.id)}>{t('Get directions')}</Action>
       </div>
     </article>
   )

@@ -19,6 +19,9 @@
 .location-menu, .mobile-nav { position: absolute; background: white; box-shadow: 0 12px 24px #0002; }
 .location-menu { top: 100%; left: -16px; min-width: 170px; padding: 10px 0; }
 .location-menu button { display: block; width: 100%; padding: 12px 16px; text-align: left; }
+.contact-menu a { display: block; padding: 12px 16px; }
+.mobile-nav .contact-menu { position: static; box-shadow: none; border-left: 1px solid #d6d3cd; margin-top: 8px; }
+.mobile-nav { max-height: calc(100dvh - 62px); overflow-y: auto; }
 .footer-bar { display: grid; grid-template-columns: 1fr auto 1fr; grid-template-areas: "brand locations socials"; align-items: center; gap: 8px 16px; padding: 28px 5%; text-align: center; background: #171815; color: white; }
 .footer-bar .wordmark { grid-area: brand; justify-self: start; font-size: clamp(15px,1.64vw,27px); }
 .footer-locations { grid-area: locations; justify-self: center; display: grid; grid-template-columns: repeat(2, 1fr); }

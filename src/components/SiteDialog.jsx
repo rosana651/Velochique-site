@@ -2,11 +2,14 @@ import { usePreferences } from '../locale/usePreferences'
 import { useEffect, useRef } from 'react'
 import Directory from './dialogs/Directory'
 import Detail from './dialogs/Detail'
+import { locations, socialLinks } from '../data/site'
+import SiteLink from './ui/SiteLink'
 import Icon from './ui/Icon'
 
 export default function SiteDialog({ panel, openPanel, close }) {
   const { t } = usePreferences()
   const dialog = useRef(null)
+  const network = socialLinks.find(item => item.icon === panel)
   useEffect(() => {
     const element = dialog.current
     const previous = document.activeElement
@@ -31,7 +34,15 @@ export default function SiteDialog({ panel, openPanel, close }) {
     }
   }}>
     <button className="dialog-close icon-button" aria-label={t('Close dialog')} onClick={close}><Icon name="close" /></button>
-    {panel === 'search' || panel === 'catalogue'
+    {network ? <>
+      <h2 id="panel-title">{network.name}</h2>
+      <p>{t('Choose a café')}</p>
+      <ul className="result-list">
+        {locations.map(location => <li key={location.id}>
+          <SiteLink href={network.profiles[location.id]} onClick={close}>{location.name}<Icon name="arrow" /></SiteLink>
+        </li>)}
+      </ul>
+    </> : panel === 'search' || panel === 'catalogue'
       ? <Directory key={panel} catalogue={panel === 'catalogue'} openPanel={openPanel} close={close} />
       : <Detail panel={panel} close={close} />}
   </dialog>

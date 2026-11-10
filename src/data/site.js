@@ -2,9 +2,14 @@ export const contactUrl = 'https://linktr.ee/velochique'
 export const bookingUrl = 'https://velochique.booqableshop.com/'
 
 export const socialLinks = [
-  { name: 'TikTok', icon: 'tiktok', href: 'https://www.tiktok.com/@velochique20' },
-  { name: 'Facebook', icon: 'facebook', href: 'https://www.facebook.com/velochique/' },
-  { name: 'Instagram', icon: 'instagram', href: 'https://www.instagram.com/velochique' },
+  { name: 'Facebook', icon: 'facebook', profiles: {
+    monchique: 'https://www.facebook.com/velochique',
+    portimao: 'https://www.facebook.com/profile.php?id=61590565472338',
+  } },
+  { name: 'Instagram', icon: 'instagram', profiles: {
+    monchique: 'https://www.instagram.com/velochique/?hl=en',
+    portimao: 'https://www.instagram.com/velochiquevistario/?hl=en',
+  } },
 ]
 
 export const ridesUrl = 'https://www.strava.com/clubs/782258'
@@ -14,13 +19,7 @@ export const locations = [
   { id: 'portimao', name: 'Vista Rio · Portimão', description: 'Our riverside café in Portimão. Specialty coffee, brunch, lunch and more.', address: 'Zona Ribeirinha, Portimão', detail: 'Follow the river into Portimão for a slower start or a post-ride lunch. Meet us at Vista Rio for coffee and brunch by the water.' },
 ]
 
-export const products = [
-  { id: 'hoodies', name: 'Hoodies', price: 65, description: 'An easy layer for cool starts and evenings after the ride.' },
-  { id: 'jerseys', name: 'Jerseys', price: 75, description: 'Velochique colours for the road, from the first climb to the café stop.' },
-  { id: 'bib-shorts', name: 'Bib shorts', price: 95, description: 'A pared-back staple for long days in the saddle.' },
-  { id: 'bottles', name: 'Bottles', price: 15, description: 'A refillable ride companion for the Algarve hills.' },
-  { id: 'tote-bags', name: 'Tote bags', price: 20, description: 'An everyday carry for market mornings and coffee runs.' },
-]
+export { products } from './products.js'
 
 export const navigation = [
 
@@ -28,7 +27,6 @@ export const navigation = [
   { label: 'Shop', href: '/shop' },
   { label: 'Rides & events', href: ridesUrl },
   { label: 'About', panel: 'about' },
-  { label: 'Contact', href: '#contact' },
 ]
 
 export const stories = {

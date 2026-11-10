@@ -7,17 +7,17 @@ import SiteLink from '../ui/SiteLink'
 
 const entries = [
   ...locations.map(({ id, name }) => ({ id, title: name, label: 'Location' })),
-  ...products.map(({ id, name }) => ({ id, title: name, label: 'Collection' })),
   ...Object.entries(stories).map(([id, story]) => ({ id, title: story.title, label: story.label })),
   { id: 'community', title: 'Social rides & events', label: 'Community', href: ridesUrl },
   { id: 'contact', title: 'Contact Velochique', label: 'Information', href: '#contact' },
 ]
 
 export default function Directory({ catalogue, openPanel, close }) {
-  const { t } = usePreferences()
+  const { t, language } = usePreferences()
   const [query, setQuery] = useState('')
   const normalize = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
-  const results = entries.filter(item => catalogue ? item.label === 'Collection' : normalize(t(item.title) + ' ' + t(item.label)).includes(normalize(query.trim())))
+  const productEntries = products.map(product => ({ id: product.id, title: product.name[language], label: 'Collection', href: `/shop/${product.id}/` }))
+  const results = [...entries, ...productEntries].filter(item => catalogue ? item.label === 'Collection' : normalize(t(item.title) + ' ' + t(item.label)).includes(normalize(query.trim())))
   return <>
     <Eyebrow>Velochique</Eyebrow>
     <h2 id="panel-title">{t(catalogue ? 'The collection' : 'Search the site')}</h2>
