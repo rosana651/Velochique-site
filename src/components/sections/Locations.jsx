@@ -6,8 +6,9 @@ function LocationCard({ location, openPanel }) {
   const { t } = usePreferences()
   const mountain = location.id === 'monchique'
   const images = import.meta.env.BASE_URL + 'images/'
-  const photo = images + (mountain ? 'monchique-cafe.jpg' : 'portimao.webp')
-  const smallPhoto = images + (mountain ? 'monchique-cafe-640.jpg' : 'portimao-640.webp')
+  const cafe = mountain ? 'monchique-cafe' : 'portimao-cafe'
+  const photo = `${images}${cafe}.jpg`
+  const smallPhoto = `${images}${cafe}-640.jpg`
   return (
     <article className="location-card photo-section">
       <img className="scene" src={photo} srcSet={`${smallPhoto} 640w, ${photo} ${mountain ? 1280 : 1600}w`} sizes="(max-width: 650px) 100vw, 49vw" alt="" />

@@ -10,9 +10,9 @@ import Collection from '../components/sections/Collection'
 import SiteDialog from '../components/SiteDialog'
 import usePageMotion from '../hooks/usePageMotion'
 
-export default function HomePage() {
+export default function HomePage({ initialPanel = null }) {
   const { t } = usePreferences()
-  const [panel, setPanel] = useState(null)
+  const [panel, setPanel] = useState(initialPanel)
   const page = useRef(null)
   usePageMotion(page)
   const title = 'Velochique — ' + t('Cycling & Specialty Coffee in the Algarve')

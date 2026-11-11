@@ -1,13 +1,9 @@
 import { usePreferences } from '../../locale/usePreferences'
-import { useLocation, Link } from 'react-router-dom'
-import { drinkSections, menuCategories } from '../../data/menu'
+import { locations } from '../../data/site'
 import Icon from '../ui/Icon'
 
 export default function MenuNavigation({ expanded, onToggle, onSelect, variant }) {
   const { t } = usePreferences()
-  const { pathname, search } = useLocation()
-  const category = new URLSearchParams(search).get('category') || menuCategories[0].id
-  const current = drinkSections.some(section => section.id === category) ? 'drinks' : category
   const listId = `categories-${variant}`
 
   return (
@@ -16,12 +12,12 @@ export default function MenuNavigation({ expanded, onToggle, onSelect, variant }
         {t('Menu')} <Icon name="chevron" size={13} />
       </button>
       {expanded && (
-        <ul id={listId} className="category-popup" aria-label={t('Menu categories')}>
-          {menuCategories.map(({ id, name }) => (
+        <ul id={listId} className="category-popup" aria-label={t('Choose a café')}>
+          {locations.map(({ id, name }) => (
             <li key={id}>
-              <Link to={`/menu?category=${id}`} aria-current={pathname === '/menu' && current === id ? 'page' : undefined} onClick={onSelect}>
+              <button className="w-full px-5 py-3 text-left font-display hover:bg-stone-100 focus-visible:bg-stone-100" onClick={() => onSelect('menu-' + id)}>
                 {t(name)}
-              </Link>
+              </button>
             </li>
           ))}
         </ul>
