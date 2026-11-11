@@ -79,8 +79,8 @@ const catalogue = [
     inStock: false,
     name: { en: 'Velochique Cycling Bottle', pt: 'Bidão de ciclismo Velochique' },
     description: {
-      en: 'Cycling bottle with the Velochique logo and a sports cap.',
-      pt: 'Bidão de ciclismo com o logótipo Velochique e tampa desportiva.',
+      en: 'All bottles are 100% recyclable, and BPA and PET free',
+      pt: 'Todos os bidões são 100% recicláveis e não contêm BPA nem PET.',
     },
     volumes: bottleVolumes,
     images: [...['8563', '8368'].map(bottlePhoto), ...bottleVolumes.flatMap(volume => volume.images)],
