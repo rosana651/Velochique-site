@@ -38,7 +38,7 @@ export default function SiteDialog({ panel, openPanel, close }) {
     {!menuLocation && <button className="dialog-close icon-button" aria-label={t('Close dialog')} onClick={close}><Icon name="close" /></button>}
     {menuLocation ? <MenuReader key={panel} location={menuLocation} close={close} /> : panel === 'menu' ? <>
       <h2 id="panel-title">MENU</h2>
-      <ul className="result-list">{locations.map(item => <li key={item.id}><button onClick={() => openPanel('menu-' + item.id)}>{item.name}<Icon name="arrow" /></button></li>)}</ul>
+      <ul className="result-list">{locations.map(item => <li key={item.id}><SiteLink href={`/menu/?location=${item.id}`} onClick={close}>{item.name}<Icon name="arrow" /></SiteLink></li>)}</ul>
     </> : network ? <>
       <h2 id="panel-title">{network.name}</h2>
       <p>{t('Choose a café')}</p>

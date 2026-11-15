@@ -64,7 +64,7 @@ export default function Header({ openPanel }) {
     openPanel(id)
   }
   function categories(variant) {
-    return <MenuNavigation variant={variant} expanded={menu === variant} onToggle={e => toggle(e, variant)} onSelect={show} />
+    return <MenuNavigation variant={variant} expanded={menu === variant} onToggle={e => toggle(e, variant)} onSelect={() => setMenu(null)} />
   }
 
   function contactLinks(mobile = false) {

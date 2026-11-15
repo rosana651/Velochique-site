@@ -1,6 +1,7 @@
 import { usePreferences } from '../../locale/usePreferences'
 import { locations } from '../../data/site'
 import Icon from '../ui/Icon'
+import { Link } from 'react-router-dom'
 
 export default function MenuNavigation({ expanded, onToggle, onSelect, variant }) {
   const { t } = usePreferences()
@@ -15,9 +16,9 @@ export default function MenuNavigation({ expanded, onToggle, onSelect, variant }
         <ul id={listId} className="category-popup" aria-label={t('Choose a café')}>
           {locations.map(({ id, name }) => (
             <li key={id}>
-              <button className="w-full px-5 py-3 text-left font-display hover:bg-stone-100 focus-visible:bg-stone-100" onClick={() => onSelect('menu-' + id)}>
+              <Link to={`/menu/?location=${id}`} className="block w-full px-5 py-3 text-left font-display hover:bg-stone-100 focus-visible:bg-stone-100" onClick={onSelect}>
                 {t(name)}
-              </button>
+              </Link>
             </li>
           ))}
         </ul>
