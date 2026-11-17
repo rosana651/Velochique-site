@@ -11,6 +11,7 @@ function MenuContent({ location }) {
   const { t } = usePreferences()
   const sections = restaurantMenus[location.id]
   const [active, setActive] = useState(sections[0].id)
+  const [showTop, setShowTop] = useState(false)
   const navigation = useRef(null)
   const content = useRef(null)
   const frame = useRef(0)
@@ -21,7 +22,8 @@ function MenuContent({ location }) {
     frame.current = 0
     const update = () => {
       frame.current = 0
-      const offset = window.innerWidth < 768 ? 180 : 135
+      const offset = window.innerWidth < 768 ? navigation.current.offsetHeight + 20 : 40
+      setShowTop(window.scrollY > window.innerHeight)
       const elements = [...content.current.querySelectorAll('[data-menu-category]')]
       const current = elements.filter(element => element.getBoundingClientRect().top <= offset).at(-1) ?? elements[0]
       setActive(current.id)
@@ -56,14 +58,16 @@ function MenuContent({ location }) {
       </nav>
     </div>
     <div className="grid items-start gap-7 md:grid-cols-[220px_minmax(0,1fr)] md:gap-12">
-      <nav ref={navigation} aria-label={t('Menu categories')} className="sticky top-[96px] z-4 min-w-0 -mx-5 flex gap-1 overflow-x-auto border-y border-stone-200 bg-[#faf9f6] px-5 py-3 md:top-[112px] md:mx-0 md:max-h-[calc(100dvh-132px)] md:flex-col md:overflow-y-auto md:border-0 md:px-0 md:py-0">
+      <nav ref={navigation} aria-label={t('Menu categories')} className="sticky top-0 z-4 min-w-0 -mx-5 flex gap-1 overflow-x-auto border-y border-stone-200 bg-[#faf9f6] px-5 py-3 md:top-6 md:mx-0 md:max-h-[calc(100dvh-48px)] md:flex-col md:overflow-y-auto md:border-0 md:px-0 md:py-0">
         {sections.map(category => <a key={category.id} href={'#' + category.id} aria-current={active === category.id ? 'location' : undefined} onClick={event => {
           event.preventDefault()
-          document.getElementById(category.id)?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' })
+          const target = document.getElementById(category.id)
+          const offset = window.innerWidth < 768 ? navigation.current.offsetHeight + 16 : 32
+          if (target) window.scrollTo({ top: window.scrollY + target.getBoundingClientRect().top - offset, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })
         }} className={'shrink-0 rounded-lg px-4 py-3 text-sm font-medium transition-colors md:shrink md:leading-5 ' + (active === category.id ? 'bg-stone-900 text-white' : 'text-stone-600 hover:bg-stone-200 hover:text-stone-950')}>{t(category.name)}</a>)}
       </nav>
       <div ref={content} className="min-w-0">
-        {sections.map(category => <section key={category.id} id={category.id} data-menu-category aria-labelledby={category.id + '-title'} className="mb-12 scroll-mt-[176px] md:mb-16 md:scroll-mt-[128px]">
+        {sections.map(category => <section key={category.id} id={category.id} data-menu-category aria-labelledby={category.id + '-title'} className="mb-12 scroll-mt-24 md:mb-16 md:scroll-mt-8">
           <header className="mb-2 border-b-2 border-stone-900 pb-5">
             <h2 id={category.id + '-title'} className="text-2xl font-semibold normal-case! tracking-tight md:text-3xl">{t(category.name)}</h2>
             {category.note && <p className="mt-2 text-sm text-stone-500">{t(category.note)}</p>}
@@ -84,6 +88,10 @@ function MenuContent({ location }) {
         <p className="border-t border-stone-300 pt-6 text-xs leading-6 text-stone-500">{t('Prices include VAT. Substitutions may cost extra. Please tell the team about any allergies or intolerances when ordering.')}</p>
       </div>
     </div>
+    {showTop && <button type="button" className="fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-5 flex min-h-14 items-center gap-3 rounded-full border border-white/20 bg-stone-900 px-6 py-4 text-base font-bold text-white shadow-xl shadow-black/25 transition-colors hover:bg-stone-700 md:right-6 md:min-h-16 md:px-8 md:text-lg" onClick={() => {
+      document.querySelector('.site-header a')?.focus({ preventScroll: true })
+      window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })
+    }}><span aria-hidden="true" className="text-2xl leading-none md:text-3xl">↑</span>{t('Back to top')}</button>}
   </main>
 }
 
@@ -94,7 +102,7 @@ export default function MenuPage() {
   const location = locations.find(branch => branch.id === params.get('location')) ?? locations[0]
   return <div id="top" className="bg-[#faf9f6] font-display">
     <a className="skip-link" href="#main">{t('Skip to menu')}</a>
-    <Header openPanel={setPanel} />
+    <Header openPanel={setPanel} sticky={false} />
     <MenuContent key={location.id} location={location} />
     <Footer openPanel={setPanel} />
     {panel && <SiteDialog panel={panel} openPanel={setPanel} close={() => setPanel(null)} />}

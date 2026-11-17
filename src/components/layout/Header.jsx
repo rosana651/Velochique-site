@@ -8,7 +8,7 @@ import Icon from '../ui/Icon'
 import SiteLink from '../ui/SiteLink'
 import { locations, navigation } from '../../data/site'
 
-export default function Header({ openPanel }) {
+export default function Header({ openPanel, sticky = true }) {
   const { t } = usePreferences()
   const [menu, setMenu] = useState(null)
   const [hidden, setHidden] = useState(false)
@@ -19,6 +19,7 @@ export default function Header({ openPanel }) {
   const mobileOpen = menu === 'mobile' || menu === 'mobile-contact'
 
   useEffect(() => {
+    if (!sticky) return
     let lastY = window.scrollY
     function updateVisibility() {
       const maxY = document.documentElement.scrollHeight - window.innerHeight
@@ -29,7 +30,7 @@ export default function Header({ openPanel }) {
     }
     window.addEventListener('scroll', updateVisibility, { passive: true })
     return () => window.removeEventListener('scroll', updateVisibility)
-  }, [])
+  }, [sticky])
 
   useEffect(() => {
     if (!menu) return
@@ -86,7 +87,7 @@ export default function Header({ openPanel }) {
     : <button key={t(label)} onClick={() => show(panel)}>{t(label)}</button>)
 
   return (
-    <header ref={header} className="site-header" data-hidden={hidden && !menu}>
+    <header ref={header} className="site-header" style={sticky ? undefined : { position: 'relative' }} data-hidden={sticky && hidden && !menu}>
       <SiteLink className="shrink-0 py-1" href={homePrefix + '#top'} aria-label={t('Velochique home')}><BrandLogo /></SiteLink>
       <nav className="desktop-nav self-end mb-4" aria-label={t('Primary')}>
         <div className="relative">
