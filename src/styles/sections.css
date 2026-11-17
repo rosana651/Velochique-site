@@ -9,7 +9,7 @@
 .locations { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px,1.3vw,24px); padding: clamp(10px,1.15vw,22px) 1.5%; }
 .location-card { display: flex; align-items: flex-end; min-height: clamp(275px,26.3vw,500px); padding: clamp(24px,2.9vw,56px); }
 .location-card::before { background: linear-gradient(90deg,#0d100bd9, #15170e63 48%,transparent 84%),linear-gradient(0deg,#10100833,transparent 70%); }
-.overline { letter-spacing: .36em; }
+.location-brand { letter-spacing: .36em; }
 .location-copy { display: grid; justify-items: start; }
 .location-copy h3 { min-height: 2.12em; font-size: clamp(26px,2.5vw,48px); line-height: 1.06; letter-spacing: .19em; margin: .3em 0; font-weight: 500; }
 .short-rule { width: 2.7rem; margin: .7em 0; }

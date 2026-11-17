@@ -15,8 +15,8 @@ export const socialLinks = [
 export const ridesUrl = 'https://www.strava.com/clubs/782258'
 
 export const locations = [
-  { id: 'monchique', name: 'Monchique', description: 'The original. Mountains, coffee, food and a cycling hub.', address: 'Rua Serpa Pinto 8, Monchique', detail: 'Stop in before the climb or settle in after the descent. Our original mountain café brings the coffee bar, bike shop and workshop together.' },
-  { id: 'portimao', name: 'Vista Rio · Portimão', description: 'Our riverside café in Portimão. Specialty coffee, brunch, lunch and more.', address: 'Zona Ribeirinha, Portimão', detail: 'Follow the river into Portimão for a slower start or a post-ride lunch. Meet us at Vista Rio for coffee and brunch by the water.' },
+  { id: 'monchique', name: 'Monchique', description: 'The original. Mountains, coffee, food and a cycling hub.', address: 'Largo dos Chorões, Monchique', phone: '+351 968 848 550', detail: 'Stop in before the climb or settle in after the descent. Our original mountain café brings the coffee bar, bike shop and workshop together.' },
+  { id: 'portimao', name: 'Vista Rio · Portimão', description: 'Our riverside café in Portimão. Specialty coffee, brunch, lunch and more.', address: 'Zona Ribeirinha, Portimão', phone: '+351 927 162 334', detail: 'Follow the river into Portimão for a slower start or a post-ride lunch. Meet us at Vista Rio for coffee and brunch by the water.' },
 ]
 
 export { products } from './products.js'

@@ -29,7 +29,7 @@ export default function ShopPage() {
           {productId ? <>
             <Link to="/shop/" className="mb-6 inline-flex min-h-11 items-center gap-2 hover:underline">← {t('Back to shop')}</Link>
             {product ? <Suspense fallback={<p role="status">{product.name[language]}…</p>}>
-              <ProductDetails product={product} />
+              <ProductDetails key={product.id} product={product} />
             </Suspense> : <h1>{t('Product unavailable')}</h1>}
           </> : <>
           <h1 className="text-4xl font-semibold tracking-widest md:text-6xl">{t("Shop")}</h1>

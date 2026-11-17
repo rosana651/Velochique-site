@@ -13,7 +13,7 @@ function LocationCard({ location, openPanel }) {
     <article className="location-card photo-section">
       <img className="scene" src={photo} srcSet={`${smallPhoto} 640w, ${photo} ${mountain ? 1280 : 1600}w`} sizes="(max-width: 650px) 100vw, 49vw" alt="" />
       <div className="location-copy relative">
-        <p className="overline">Velochique</p>
+        <p className="location-brand">Velochique</p>
         <h3>{mountain ? 'Monchique' : <>Vista Rio<br />Portimão</>}</h3>
         <span className="short-rule" aria-hidden="true" />
         <p className="location-desc">{t(location.description)}</p>

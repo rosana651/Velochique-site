@@ -10,10 +10,13 @@ export default function Footer({ openPanel }) {
       <a className="[grid-area:brand] justify-self-start" href="#top"><BrandLogo footer /></a>
       <div className="footer-locations">
         {locations.map(location => (
-          <button key={location.id} aria-haspopup="dialog" onClick={() => openPanel('map-' + location.id)}>
-            <strong>{location.name}</strong>
-            <small>{location.address}</small>
-          </button>
+          <div key={location.id} className="flex flex-col items-center not-first:border-s not-first:border-[#777]">
+            <button aria-haspopup="dialog" onClick={() => openPanel('map-' + location.id)}>
+              <strong>{location.name}</strong>
+              <small>{location.address}</small>
+            </button>
+            <span className="mt-1 text-sm text-[#ddd]">{location.phone}</span>
+          </div>
         ))}
       </div>
       <nav className="footer-socials" aria-label={t('Social media')}>

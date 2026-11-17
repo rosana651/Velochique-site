@@ -11,7 +11,7 @@ export default function ProductCard({ product }) {
         <span className="font-display text-sm font-semibold tracking-wide uppercase group-hover:underline">{product.name[language]}</span>
         <span className="tabular-nums">{prices?.length
           ? `${money(Math.min(...prices))} – ${money(Math.max(...prices))}`
-          : money(product.price)}</span>
+          : product.price != null ? money(product.price) : null}</span>
       </div>
       <StockStatus product={product} />
     </Link>

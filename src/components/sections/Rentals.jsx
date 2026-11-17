@@ -11,7 +11,7 @@ export default function Rentals() {
       <div className="editorial-copy">
         <Eyebrow>{t("Bike rentals")}</Eyebrow>
         <h2>{t("Explore the")}<br />{t("Algarve by bike.")}</h2>
-        <p>{t("Premium road, gravel and e-MTB rentals, with collection in Monchique or Portimão.")}</p>
+        <p>{t("Discover the Algarve with our road, MTB and e-MTB rentals. Pick up your bike in Monchique or Portimão and start your adventure.")}</p>
         <Action bike tone="light" href={bookingUrl}>{t("Book your bike")}</Action>
       </div>
     </section>

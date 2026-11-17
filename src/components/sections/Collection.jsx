@@ -14,9 +14,9 @@ export default function Collection({ openPanel }) {
         <p>{t("Cycling kit, casual wear and everyday essentials for life on and off the bike.")}</p>
         <Action href="/shop">{t("View shop")}</Action>
       </div>
-      <ul className="product-rail">{products.map(item => (
+      <ul className="product-rail">{products.slice(0, 5).map(item => (
         <li key={item.id}><button onClick={() => openPanel(item.id)}>
-          <div className="product-image"><img src={import.meta.env.BASE_URL + item.images[0]} alt="" loading="lazy" /></div>
+          <div className="product-image"><img src={import.meta.env.BASE_URL + (item.homeCover ?? item.images[0])} alt="" loading="lazy" /></div>
           <span>{item.name[language]}</span>
           <StockStatus product={item} />
         </button></li>

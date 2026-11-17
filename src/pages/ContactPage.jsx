@@ -14,22 +14,31 @@ const recipients = {
 function ContactForm({ location }) {
   const { t } = usePreferences()
   const [status, setStatus] = useState('idle')
+  const [reason, setReason] = useState('')
+  const recipient = recipients[location.id]
   const inputStyle = 'mt-2 block w-full rounded-xl border border-[#bcb9b0] bg-white px-3 py-3'
 
   async function submit(event) {
     event.preventDefault()
     if (status === 'sending') return
     const form = event.currentTarget
-    const data = new FormData(form)
+    const data = Object.fromEntries(new FormData(form))
+    data._url = window.location.href
+    setReason('')
     setStatus('sending')
     try {
       const response = await fetch(form.action, {
         method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: data,
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        signal: AbortSignal.timeout(20000),
       })
-      const result = await response.json()
-      if (!response.ok || String(result.success) !== 'true') throw new Error('Submission failed')
+      const result = await response.json().catch(() => null)
+      if (!response.ok || String(result?.success) !== 'true') {
+        setReason(typeof result?.message === 'string' ? result.message : `FormSubmit · HTTP ${response.status}`)
+        setStatus('error')
+        return
+      }
       form.reset()
       setStatus('success')
     } catch {
@@ -37,15 +46,21 @@ function ContactForm({ location }) {
     }
   }
 
-  return <form className="mt-7 border-t border-[#c6c3ba] pt-6" action={`https://formsubmit.co/ajax/${recipients[location.id]}`} method="post" onSubmit={submit}>
+  return <form className="mt-7 border-t border-[#c6c3ba] pt-6" action={`https://formsubmit.co/ajax/${recipient}`} method="post" onSubmit={submit}>
     <input type="hidden" name="_subject" value={`Velochique · ${location.name}`} />
     <fieldset disabled={status === 'sending'} className="grid gap-5 sm:grid-cols-2">
       <label>{t('Your name')}<input className={inputStyle} name="name" autoComplete="name" required /></label>
       <label>{t('Your email')}<input className={inputStyle} name="email" type="email" autoComplete="email" required /></label>
       <label className="sm:col-span-2">{t('Message')}<textarea className={inputStyle} name="message" rows={6} required /></label>
+      <a className="justify-self-start underline underline-offset-2 sm:col-span-2" href={`mailto:${recipient}`}>{recipient}</a>
       <button className="action action--dark justify-self-start disabled:opacity-60" type="submit">{t(status === 'sending' ? 'Sending…' : 'Send message')}</button>
     </fieldset>
-    <p role="status" className="mt-4">{status === 'success' && t('Thank you. Your message has been submitted.')}{status === 'error' && t('We couldn’t send your message. Please try again.')}</p>
+    <div role="status" className="mt-4">
+      {status === 'success' && t('Thank you. Your message has been submitted.')}
+      {status === 'error' && <>
+        <p>{t('We couldn’t confirm submission.')} {reason || t('No response from the email service.')}</p>
+      </>}
+    </div>
   </form>
 }
 
@@ -65,7 +80,10 @@ export default function ContactPage() {
       <div className="mx-auto max-w-2xl">
         <p className="eyebrow">{t('Contact us')}</p>
         <h1 className="mt-4 text-3xl font-semibold tracking-wide md:text-5xl">{location.name}</h1>
-        <p className="mt-2">{location.address}</p>
+        <address className="mt-2 flex flex-col items-start gap-1 not-italic">
+          <span>{location.address}</span>
+          <span>{location.phone}</span>
+        </address>
         <ContactForm key={location.id} location={location} />
       </div>
     </main>

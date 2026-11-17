@@ -26,7 +26,6 @@
 .footer-bar .wordmark { grid-area: brand; justify-self: start; font-size: clamp(15px,1.64vw,27px); }
 .footer-locations { grid-area: locations; justify-self: center; display: grid; grid-template-columns: repeat(2, 1fr); }
 .footer-locations button { min-height: 44px; padding-inline: clamp(18px,3vw,48px); }
-.footer-locations button + button { border-inline-start: 1px solid #777; }
 .footer-socials { grid-area: socials; justify-self: end; display: flex; gap: 4px; }
 .footer-socials a { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; }
 .footer-socials a:hover, .footer-socials a:focus-visible { background: #363732; }

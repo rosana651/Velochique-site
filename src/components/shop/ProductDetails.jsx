@@ -11,8 +11,24 @@ export default function ProductDetails({ product }) {
   const { language, money, t } = usePreferences()
   const gallery = useRef(null)
   const [slideIndex, setSlideIndex] = useState(0)
+  const [bottleChoice, setBottleChoice] = useState({ volume: product.volumes?.[0], color: null })
   const selectedColor = product.colors?.find(color => color.images?.includes(product.images[slideIndex]))
-  const volume = product.volumes?.find(option => option.images.includes(product.images[slideIndex])) ?? product.volumes?.[0]
+  const volume = bottleChoice.volume ?? product.volumes?.[0]
+  const price = volume?.price ?? product.price
+
+  function chooseBottle(option, color) {
+    setBottleChoice({ volume: option, color })
+    const photo = color ? option.images.find(image => color.images.includes(image)) : option.images[0]
+    showPhoto(photo ?? product.images[0])
+  }
+
+  function updateSlide(swiper) {
+    const index = swiper.activeIndex
+    setSlideIndex(index)
+    const image = product.images[index]
+    const option = product.volumes?.find(item => item.images.includes(image))
+    if (option) setBottleChoice({ volume: option, color: product.colors.find(item => item.images.includes(image)) })
+  }
 
   function showPhoto(image) {
     const swiper = gallery.current
@@ -24,7 +40,7 @@ export default function ProductDetails({ product }) {
     <div className="relative min-w-0">
     <Swiper key={product.id} modules={[Navigation, A11y, Zoom]} navigation={product.images.length > 1}
       zoom={{ maxRatio: 3 }} onSwiper={swiper => { gallery.current = swiper }}
-      onSlideChange={swiper => setSlideIndex(swiper.activeIndex)}
+      onSlideChange={updateSlide}
       a11y={{ prevSlideMessage: t('Previous photo'), nextSlideMessage: t('Next photo') }}
       className="w-full min-w-0 rounded-sm bg-[#eeeae5] [--swiper-theme-color:#191a18] [--swiper-navigation-size:24px]">
       {product.images.map((image, index) => <SwiperSlide key={image}>
@@ -37,22 +53,31 @@ export default function ProductDetails({ product }) {
     </div>
     <div className="md:pt-6">
       <h1 className="font-display text-3xl font-semibold tracking-wide md:text-5xl">{product.name[language]}</h1>
-      <p className="mt-4 text-2xl tabular-nums">{money(volume?.price ?? product.price)}</p>
+      {price != null && <p className="mt-4 text-2xl tabular-nums">{money(price)}</p>}
       <StockStatus product={product} />
       <p className="my-6 max-w-prose border-t border-[#c6c3ba] pt-6">{product.description[language]}</p>
       {volume && <fieldset className="mb-4">
         <legend className="mb-3 font-semibold">{t('Capacity')}</legend>
         <div className="flex flex-wrap gap-2">
           {product.volumes.map(option => <button key={option.ml} type="button"
-            aria-pressed={volume === option} onClick={() => showPhoto(option.images[0])}
+            aria-pressed={volume === option} onClick={() => chooseBottle(option, bottleChoice.color)}
             className="min-h-11 rounded-sm border border-[#bcb9b0] px-3 aria-pressed:border-black aria-pressed:bg-black aria-pressed:text-white">
             {option.ml} ml · {money(option.price)}
           </button>)}
         </div>
       </fieldset>}
       {product.sizes?.length > 0 && <p className="mb-4"><strong>{t('Sizes')}</strong> · {product.sizes.join(' / ')}</p>}
-      {selectedColor ? <fieldset className="mb-4">
-        <legend className="mb-3"><strong>{t('Colours')}</strong> · {selectedColor[language]}</legend>
+      {product.volumes ? <fieldset className="mb-4">
+        <legend className="mb-3 font-semibold">{t('Colours')}</legend>
+        <div className="flex flex-wrap gap-2">
+          {product.colors.map(color => <button key={color.en} type="button"
+            aria-pressed={bottleChoice.color === color} onClick={() => chooseBottle(volume, color)}
+            className="min-h-11 rounded-sm border border-[#bcb9b0] px-3 aria-pressed:border-black aria-pressed:bg-black aria-pressed:text-white">
+            {color[language]}
+          </button>)}
+        </div>
+      </fieldset> : product.colors?.[0]?.images ? <fieldset className="mb-4">
+        <legend className="mb-3"><strong>{t('Colours')}</strong>{selectedColor && ' · ' + selectedColor[language]}</legend>
         <div className="flex flex-wrap gap-2">
           {product.colors.map(color => <button key={color.images[0]} type="button"
             className="size-16 overflow-hidden rounded-sm border-2 border-transparent bg-[#eeeae5] p-0.5 hover:border-[#a9a69e] aria-pressed:border-[#191a18] sm:size-20"
