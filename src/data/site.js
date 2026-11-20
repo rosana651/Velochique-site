@@ -1,5 +1,5 @@
 export const contactUrl = 'https://linktr.ee/velochique'
-export const bookingUrl = 'https://velochique.booqableshop.com/'
+export const bookingUrl = '/bike-rentals/'
 
 export const socialLinks = [
   { name: 'Facebook', icon: 'facebook', profiles: {
@@ -26,7 +26,8 @@ export const navigation = [
   { label: 'Bike rentals', href: bookingUrl },
   { label: 'Shop', href: '/shop' },
   { label: 'Rides & events', href: ridesUrl },
-  { label: 'About', panel: 'about' },
+  { label: 'Coffee story', href: '/coffee-story/' },
+  { label: 'About us', href: '/about' },
 ]
 
 export const stories = {

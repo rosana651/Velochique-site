@@ -6,7 +6,7 @@ import Eyebrow from '../ui/Eyebrow'
 import Icon from '../ui/Icon'
 import SiteLink from '../ui/SiteLink'
 
-export default function Detail({ panel, close }) {
+export default function Detail({ panel, close, openPanel }) {
   const { t, language } = usePreferences()
   const mapView = panel.startsWith('map-')
   const location = locations.find(item => item.id === (mapView ? panel.slice(4) : panel))
@@ -16,8 +16,13 @@ export default function Detail({ panel, close }) {
   if (location) {
     const query = encodeURIComponent('Velochique ' + location.name + ', ' + location.address + ', Portugal')
     if (mapView) return <>
+      <div role="group" aria-label={t('Locations')} className="mr-8 flex flex-wrap gap-2">
+        {locations.map(item => <button key={item.id} type="button" aria-pressed={item.id === location.id}
+          className="rounded-full border px-4 py-2 text-sm aria-pressed:bg-[#191a18] aria-pressed:text-white"
+          onClick={() => openPanel('map-' + item.id)}>{item.name}</button>)}
+      </div>
       <h2 id="panel-title">{location.name}</h2>
-      <p>{location.address}</p>
+      <p>{location.address}<br />{location.phone}</p>
       <iframe className="location-map" title={`Google Maps · ${location.name}`} src={`https://maps.google.com/maps?q=${query}&z=16&output=embed`} referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
       <SiteLink className="underline" href={'https://www.google.com/maps/search/?api=1&query=' + query}>{t("Open in Google Maps ↗")}</SiteLink>
     </>

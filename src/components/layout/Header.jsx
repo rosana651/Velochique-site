@@ -16,7 +16,7 @@ export default function Header({ openPanel, sticky = true }) {
   const homePrefix = pathname === '/' ? '' : '/'
   const header = useRef(null)
   const trigger = useRef(null)
-  const mobileOpen = menu === 'mobile' || menu === 'mobile-contact'
+  const mobileOpen = menu === 'mobile' || menu?.startsWith('mobile-')
 
   useEffect(() => {
     if (!sticky) return
@@ -36,7 +36,7 @@ export default function Header({ openPanel, sticky = true }) {
     if (!menu) return
     function dismiss(event) {
       if (event.key === 'Escape') {
-        if (menu === 'mobile-contact') {
+        if (menu.startsWith('mobile-')) {
           setMenu('mobile')
           trigger.current?.focus()
           return
@@ -68,16 +68,19 @@ export default function Header({ openPanel, sticky = true }) {
     return <MenuNavigation variant={variant} expanded={menu === variant} onToggle={e => toggle(e, variant)} onSelect={() => setMenu(null)} />
   }
 
-  function contactLinks(mobile = false) {
-    const id = mobile ? 'mobile-contact' : 'desktop-contact'
+  function venueLinks(label, mobile = false) {
+    const isMap = label === 'Locations'
+    const id = (mobile ? 'mobile-' : 'desktop-') + (isMap ? 'locations' : 'contact')
     const expanded = menu === id
     return <div className="relative">
       <button className="flex items-center gap-1" aria-expanded={expanded} onClick={event => {
         trigger.current = event.currentTarget
         setMenu(expanded ? (mobile ? 'mobile' : null) : id)
-      }}>{t('Contact us')} <Icon name="chevron" size={12} /></button>
+      }}>{t(label)} <Icon name="chevron" size={12} /></button>
       {expanded && <div className="location-menu contact-menu">
-        {locations.map(location => <Link key={location.id} to={`/contact/?location=${location.id}`} onClick={() => setMenu(null)}>{location.name}</Link>)}
+        {locations.map(location => isMap
+          ? <button key={location.id} type="button" aria-haspopup="dialog" onClick={() => show('map-' + location.id)}>{location.name}</button>
+          : <Link key={location.id} to={`/contact/?location=${location.id}`} onClick={() => setMenu(null)}>{location.name}</Link>)}
       </div>}
     </div>
   }
@@ -90,18 +93,15 @@ export default function Header({ openPanel, sticky = true }) {
     <header ref={header} className="site-header" style={sticky ? undefined : { position: 'relative' }} data-hidden={sticky && hidden && !menu}>
       <SiteLink className="shrink-0 py-1" href={homePrefix + '#top'} aria-label={t('Velochique home')}><BrandLogo /></SiteLink>
       <nav className="desktop-nav self-end mb-4" aria-label={t('Primary')}>
-        <div className="relative">
-          <button className="flex items-center gap-1" aria-expanded={menu === 'locations'} onClick={e => toggle(e, 'locations')}>{t("Locations")} <Icon name="chevron" size={12} /></button>
-          {menu === 'locations' && <div className="location-menu">{locations.map(item => <button key={item.id} onClick={() => show(item.id)}>{t(item.name)}</button>)}</div>}
-        </div>
+        {venueLinks('Locations')}
         {categories('desktop')}
         {links}
-        {contactLinks()}
+        {venueLinks('Contact us')}
         <PreferenceControls />
       </nav>
       {categories('compact')}
       <button className="icon-button mobile-toggle" aria-label={t('Toggle navigation')} aria-expanded={mobileOpen} onClick={e => mobileOpen ? setMenu(null) : toggle(e, 'mobile')}><Icon name={mobileOpen ? 'close' : 'menu'} /></button>
-      {mobileOpen && <nav className="mobile-nav" aria-label={t('Mobile')}><SiteLink href={homePrefix + '#locations'} onClick={() => setMenu(null)}>{t("Locations")}</SiteLink>{links}{contactLinks(true)}<PreferenceControls /></nav>}
+      {mobileOpen && <nav className="mobile-nav" aria-label={t('Mobile')}>{venueLinks('Locations', true)}{links}{venueLinks('Contact us', true)}<PreferenceControls /></nav>}
     </header>
   )
 }

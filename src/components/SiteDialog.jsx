@@ -49,6 +49,6 @@ export default function SiteDialog({ panel, openPanel, close }) {
       </ul>
     </> : panel === 'search' || panel === 'catalogue'
       ? <Directory key={panel} catalogue={panel === 'catalogue'} openPanel={openPanel} close={close} />
-      : <Detail panel={panel} close={close} />}
+      : <Detail panel={panel} close={close} openPanel={openPanel} />}
   </dialog>
 }

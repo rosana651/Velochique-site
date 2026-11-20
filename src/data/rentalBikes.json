@@ -1,0 +1,47 @@
+[
+  {
+    "id": "e-bike-giant-trance-e-f-s-shimano-deore-12s-29-wheels",
+    "name": "Giant Trance E - F/S - Shimano Deore 12s - 29\" wheels",
+    "price": 100
+  },
+  {
+    "id": "swift-rydon-mtb",
+    "name": "SWIFT RYDON MTB",
+    "price": 29
+  },
+  {
+    "id": "e-mtb-premium",
+    "name": "E-MTB (PREMIUM)",
+    "price": 50
+  },
+  {
+    "id": "trek-emonda-sl6-carbon-road-bike",
+    "name": "Trek Emonda SL6 - Shimano Ultegra (carbon road bike)",
+    "price": 40
+  },
+  {
+    "id": "mtb-bike-carbon",
+    "name": "MTB bike (carbon)",
+    "price": 40
+  },
+  {
+    "id": "road-bike-aluminium",
+    "name": "Road bike (aluminium)",
+    "price": 25
+  },
+  {
+    "id": "mtb-bike-aluminium",
+    "name": "MTB bike (aluminium)",
+    "price": 25
+  },
+  {
+    "id": "carbon-road-bike-962e20fa-6004-4203-8d35-d21a9ecd3071",
+    "name": "Road bike (carbon)",
+    "price": 40
+  },
+  {
+    "id": "boardman-slr-9-8",
+    "name": "Boardman SLR 9.8 carbon - Shimano Ultegra 11s",
+    "price": 40
+  }
+]

@@ -8,7 +8,8 @@
 }
 :root { font-family: var(--font-sans); color: #191a18; background: white; }
 html { scroll-behavior: smooth; }
-button, a { cursor: pointer; }
+button, a, select, option, input:is([type="checkbox"], [type="radio"], [type="date"]), label:has(select, input:is([type="checkbox"], [type="radio"], [type="date"])) { cursor: pointer; }
+input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; }
 :focus-visible { outline: 3px solid #c7752f; outline-offset: 3px; }
 .skip-link { position: absolute; z-index: 20; inset: 0 auto auto 1rem; transform: translateY(-110%); background: white; padding: .8rem; }
 .skip-link:focus { transform: none; }
